@@ -1,0 +1,58 @@
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\bin\Debug\net5.0\appsettings.Development.json
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\bin\Debug\net5.0\appsettings.json
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\bin\Debug\net5.0\RestGreta.exe
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\bin\Debug\net5.0\RestGreta.deps.json
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\bin\Debug\net5.0\RestGreta.runtimeconfig.json
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\bin\Debug\net5.0\RestGreta.runtimeconfig.dev.json
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\bin\Debug\net5.0\RestGreta.dll
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\bin\Debug\net5.0\ref\RestGreta.dll
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\bin\Debug\net5.0\RestGreta.pdb
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.csprojAssemblyReference.cache
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.AssemblyInfoInputs.cache
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.AssemblyInfo.cs
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.csproj.CoreCompileInputs.cache
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\obj\Debug\net5.0\staticwebassets\RestGreta.StaticWebAssets.Manifest.cache
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\obj\Debug\net5.0\staticwebassets\RestGreta.StaticWebAssets.xml
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\obj\Debug\net5.0\scopedcss\bundle\RestGreta.styles.css
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.RazorTargetAssemblyInfo.cache
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.csproj.CopyComplete
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.dll
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\obj\Debug\net5.0\ref\RestGreta.dll
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.pdb
+C:\Users\Greta\Desktop\studijos\IV kursas\I semestras\Saitynai\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.genruntimeconfig.cache
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Debug\net5.0\appsettings.Development.json
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Debug\net5.0\appsettings.json
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Debug\net5.0\RestGreta.exe
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Debug\net5.0\RestGreta.deps.json
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Debug\net5.0\RestGreta.runtimeconfig.json
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Debug\net5.0\RestGreta.runtimeconfig.dev.json
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Debug\net5.0\RestGreta.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Debug\net5.0\ref\RestGreta.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Debug\net5.0\RestGreta.pdb
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.csprojAssemblyReference.cache
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.AssemblyInfoInputs.cache
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.AssemblyInfo.cs
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.csproj.CoreCompileInputs.cache
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Debug\net5.0\staticwebassets\RestGreta.StaticWebAssets.Manifest.cache
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Debug\net5.0\staticwebassets\RestGreta.StaticWebAssets.xml
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Debug\net5.0\scopedcss\bundle\RestGreta.styles.css
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.RazorTargetAssemblyInfo.cache
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.csproj.CopyComplete
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Debug\net5.0\ref\RestGreta.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.pdb
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Debug\net5.0\RestGreta.genruntimeconfig.cache
