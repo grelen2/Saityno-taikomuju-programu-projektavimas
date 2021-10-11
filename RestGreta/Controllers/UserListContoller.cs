@@ -4,69 +4,86 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using RestGreta.Data.Dtos.UsersList;
 using RestGreta.Data.Entities;
 using RestGreta.Data.Repositories;
 
 
 namespace RestGreta.Controllers
 {
-    [ApiController]
     [Route("api/userList")]
+    [ApiController]
+    
     public class UserListContoller: ControllerBase
     {
-        private readonly IUserListRepository _userListRepository;
-        private readonly IMapper _mapper;
-        public UserListContoller(IUserListRepository userListRepository, IMapper mapper)
-        {
-            _userListRepository = userListRepository;
-            _mapper = mapper;
-        }
+        IUserListRepository db = new UserListRepository();
+        
 
         [HttpGet]
-        public async Task<IEnumerable<UserListDto>> GetAll()
+        public async Task<ActionResult<IEnumerable<UserList>>> GetAll()
         {
-            return (await _userListRepository.GetAll()).Select(o => _mapper.Map<UserListDto>(o));
+            var userlist = await db.GetAll();
+            if (userlist == null)
+            {
+                return NotFound();
+            }
+            return Ok(userlist);
         }
         [HttpGet(template: "{id}")]
-        public async Task<ActionResult<UserListDto>> Get(int id)
+        public async Task<ActionResult<UserList>> Get(string id)
         {
-            var userList = await _userListRepository.Get(id);
-            if (userList == null) return NotFound($"User with id'{id}'not found");
-            return _mapper.Map<UserListDto>(userList);
-
-
+            var userlist = await db.Get(id);
+            if (userlist == null)
+            {
+                return NotFound();
+            }
+            return Ok(userlist);
         }
         [HttpPost]
-        public async Task<ActionResult<UserListDto>> Post(CreateUserListDto userListDto)
+        public async Task<IActionResult> Post([FromBody] UserList userList)
         {
-            var userList = _mapper.Map<UserList>(userListDto);
-            await _userListRepository.Create(userList);
-            return Created($"/api/userList/{userList.Id}", _mapper.Map<UserListDto>(userList));
+            
+            if (userList.UserName == null || userList.Name == null || userList.Surname == null || userList.Password == null)
+            {
+                return BadRequest("User name or/and name or/and surname or/and password souldn't be empty");
+            }
+            else
+            {
+                await db.Create(userList);
+                return Created("Created", "Created");
+            }
         }
         [HttpPut(template: "{id}")]
-        public async Task<ActionResult<UserListDto>> Put(int id, UpdateUserListDto userListDto)
+        public async Task<IActionResult> Put([FromBody] UserList userList, string id)
         {
-            var userList = await _userListRepository.Get(id);
-            if (userList == null) return NotFound($"User with id'{id}'not found");
-
-            userList.UserName = userListDto.UserName;
-            userList.Name = userListDto.Name; 
-            userList.Surname = userListDto.Surname;
-            userList.Address = userListDto.Address;
-
-
-            await _userListRepository.Put(userList);
-            return _mapper.Map<UserListDto>(userList);
+            var usr = await db.Get(id);
+            if (usr == null)
+            {
+                return NotFound("User with this id not found");
+            }
+            if (userList.UserName == null || userList.Name == null || userList.Surname == null || userList.Password == null)
+            {
+                return BadRequest("User name or/and name or/and surname or/and password souldn't be empty");
+            }
+            else
+            {
+                userList.Id = new string(id);
+                await db.Put(userList);
+                return Ok();
+            }
         }
         [HttpDelete(template: "{id}")]
-        public async Task<ActionResult<UserListDto>> Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
-            var userList = await _userListRepository.Get(id);
-            if (userList == null) return NotFound($"User with id'{id}'not found");
-
-            await _userListRepository.Delete(userList);
-            return NoContent();
+            var userlist = await db.Get(id);
+            if (userlist == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                await db.Delete(id);
+                return Ok();
+            }
         }
     }
 }

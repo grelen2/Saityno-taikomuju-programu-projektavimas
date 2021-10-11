@@ -3,80 +3,90 @@ using System.Collections.Generic;
 using System.Linq;
 using RestGreta.Data.Entities;
 using System.Threading.Tasks;
+using MongoDB.Driver;
+using MongoDB.Bson;
 
 
 namespace RestGreta.Data.Repositories
 {
     public interface IUserListRepository
     {
-        Task<UserList> Create(UserList userList);
-        Task Delete(UserList userList);
-        Task<UserList> Get(int id);
+        Task Create(UserList userList);
+        Task Delete(string id);
+        Task<UserList> Get(string id);
         Task<IEnumerable<UserList>> GetAll();
-        Task<UserList> Put(UserList userList);
+        Task Put(UserList userList);
     }
 
     public class UserListRepository : IUserListRepository
     {
+        internal MongoDBContext db = new MongoDBContext();
         public async Task<IEnumerable<UserList>> GetAll()
         {
-            return new List<UserList>
+            try
             {
-                new UserList()
+                return await db.UserList.Find(_ => true).ToListAsync();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public async Task<UserList> Get(string id)
+        {
+                try
                 {
-
-                    UserName = "Marijukasss5",
-                    Name = "Marija",
-                    Surname = "Leonaviciute",
-                    Address = "Kaunas, Kauno gatve 3",
-                    CreationTimeUtc = DateTime.UtcNow
-                },
-                new UserList()
-                {
-                    UserName = "Ona123",
-                    Name = "Ona",
-                    Surname = "Onaityte",
-                    Address = "Kaunas, KVilniaus gatve 3",
-                    CreationTimeUtc = DateTime.UtcNow
+                    FilterDefinition<UserList> filter = Builders<UserList>.Filter.Eq(s => s.Id, new string(id));
+                    return await db.UserList.Find(filter).FirstOrDefaultAsync();
                 }
-            };
-        }
-        public async Task<UserList> Get(int id)
-        {
-            return new UserList()
-            {
-                UserName = "Marijukasss5",
-                Name = "Marija",
-                Surname = "Leonaviciute",
-                Address = "Kaunas, Kauno gatve 3",
-                CreationTimeUtc = DateTime.UtcNow
-            };
+                catch
+                {
 
-        }
-        public async Task<UserList> Create(UserList userList)
+                    return null;
+                }
+
+            }
+        public async Task Create(UserList userList)
         {
-            return new UserList()
+            try
             {
-                UserName = "Marijukasss5",
-                Name = "Marija",
-                Surname = "Leonaviciute",
-                Address = "Kaunas, Kauno gatve 3",
-                CreationTimeUtc = DateTime.UtcNow
-            };
-        }
-        public async Task<UserList> Put(UserList userList)
-        {
-            return new UserList()
+                await db.UserList.InsertOneAsync(userList);
+
+            }
+            catch
             {
-                UserName = "Marijukasss5",
-                Name = "Marija",
-                Surname = "Leonaviciute",
-                Address = "Kaunas, Kauno gatve 3",
-                CreationTimeUtc = DateTime.UtcNow
-            };
+
+                throw;
+            }
         }
-        public async Task Delete(UserList userList)
+        public async Task Put(UserList userList)
         {
+            try
+            {
+                var filter = Builders<UserList>
+                    .Filter
+                    .Eq(s => s.Id, userList.Id);
+                await db.UserList.ReplaceOneAsync(filter, userList);
+            }
+            catch
+            {
+
+                throw;
+            }
+        }
+        public async Task Delete(string id)
+        {
+
+            try
+            {
+                var filter = Builders<UserList>.Filter.Eq(s => s.Id, new string(id));
+                await db.UserList.DeleteOneAsync(filter);
+            }
+            catch
+            {
+
+                throw;
+            }
         }
     }
 }

@@ -1,0 +1,13 @@
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\PubTmp\Out\RestGreta.exe
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\PubTmp\Out\appsettings.Development.json
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\PubTmp\Out\appsettings.json
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\PubTmp\Out\RestGreta.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\PubTmp\Out\RestGreta.deps.json
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\PubTmp\Out\RestGreta.runtimeconfig.json
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\PubTmp\Out\RestGreta.pdb
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\PubTmp\Out\AutoMapper.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\PubTmp\Out\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\PubTmp\Out\Microsoft.EntityFrameworkCore.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\PubTmp\Out\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\PubTmp\Out\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\PubTmp\Out\System.Diagnostics.DiagnosticSource.dll

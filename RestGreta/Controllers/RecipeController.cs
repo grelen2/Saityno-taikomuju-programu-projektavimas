@@ -4,70 +4,86 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using RestGreta.Data.Dtos.Recipies;
 using RestGreta.Data.Entities;
 using RestGreta.Data.Repositories;
+using MongoDB.Bson;
 
 namespace RestGreta.Controllers
 {
-    [ApiController]
+    
     [Route("api/recipies")]
+    [ApiController]
     public class RecipeController :ControllerBase
     {
-        private readonly IRecipesRepository _recipiesRepository;
-        private readonly IMapper _mapper;
-        public RecipeController(IRecipesRepository recipiesRepository, IMapper mapper)
-        {
-            _recipiesRepository = recipiesRepository;
-            _mapper = mapper;
-        }
+        IRecipesRepository db = new RecipesRepository();
+        
 
         [HttpGet]
-        public async Task<IEnumerable<RecipeDto>> GetAll()
+        public async Task<ActionResult<IEnumerable<Recipe>>> GetAll()
         {
-            return (await _recipiesRepository.GetAll()).Select(o => _mapper.Map<RecipeDto>(o));
+            var recipes = await db.GetAll();
+            if (recipes == null)
+            {
+                return NotFound();
+            }
+            return Ok(recipes);
         }
         [HttpGet(template: "{id}")]
-        public async Task<ActionResult<RecipeDto>> Get(int id)
+        public async Task<ActionResult<Recipe>> Get(string id)
         {
-            var recipiesList = await _recipiesRepository.Get(id);
-            if (recipiesList == null) return NotFound($"Recipe with id'{id}'not found");
-            return _mapper.Map<RecipeDto>(recipiesList);
-
-
+            var recipe = await db.Get(id);
+            if (recipe == null)
+            {
+                return NotFound();
+            }
+            return Ok(recipe);
         }
+
         [HttpPost]
-        public async Task<ActionResult<RecipeDto>> Post(CreateRecipeDto recipiesDto)
+        public async Task<IActionResult> Post([FromBody] Recipe recipe)
         {
-            var recipiesList = _mapper.Map<Recipe>(recipiesDto);
-            await _recipiesRepository.Create(recipiesList);
-            return Created($"/api/recipies/{recipiesList.Id}", _mapper.Map<RecipeDto>(recipiesList));
+            if (recipe.RecipeName == null || recipe.ProductName == null || recipe.Quantity == null || recipe.SeesUnits == null || recipe.Description == null)
+            {
+                return BadRequest("RecipeName or/and ProductName or/and Quantity or/and SeesUnits or/and Description shouldn't be empty");
+            }
+            else
+            {
+                await db.Create(recipe);
+                return Created("Created", "Created");
+            }
         }
         [HttpPut(template: "{id}")]
-        public async Task<ActionResult<RecipeDto>> Put(int id, UpdateRecipeDto recipiesDto)
+        public async Task<IActionResult> Put([FromBody] Recipe recipe, string id)
         {
-            var recipiesList = await _recipiesRepository.Get(id);
-            if (recipiesList == null) return NotFound($"Recipe with id'{id}'not found");
-
-            recipiesList.RecipeName = recipiesDto.RecipeName;
-            recipiesList.ProductName = recipiesDto.ProductName;
-            recipiesList.Quantity = recipiesDto.Quantity;
-            recipiesList.SeesUnits = recipiesDto.SeesUnits;
-            recipiesList.Description = recipiesDto.Description;
-
-
-
-            await _recipiesRepository.Put(recipiesList);
-            return _mapper.Map<RecipeDto>(recipiesList);
+            var rec = await db.Get(id);
+            if (rec == null)
+            {
+                return NotFound("Recipe with this id not found");
+            }
+            if (recipe.RecipeName == null || recipe.ProductName == null || recipe.Quantity == null || recipe.SeesUnits == null || recipe.Description == null)
+            {
+                return BadRequest("RecipeName or/and ProductName or/and Quantity or/and SeesUnits or/and Description shouldn't be empty");
+            }
+            else
+            {
+                recipe.Id = new string(id);
+                await db.Put(recipe);
+                return Ok();
+            }
         }
         [HttpDelete(template: "{id}")]
-        public async Task<ActionResult<RecipeDto>> Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
-            var recipiesList = await _recipiesRepository.Get(id);
-            if (recipiesList == null) return NotFound($"Recipe with id'{id}'not found");
-
-            await _recipiesRepository.Delete(recipiesList);
-            return NoContent();
+            var recipe = await db.Get(id);
+            if (recipe == null)
+            {
+                return NotFound("Recipe with this id not found");
+            }
+            else
+            {
+                await db.Delete(id);
+                return Ok();
+            }
         }
     }
 }

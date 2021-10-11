@@ -3,64 +3,90 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace RestGreta.Data.Repositories
 {
     public interface IProductsRepository
     {
         
-        Task<Product> Get(int id);
+        Task<Product> Get(string id);
         Task<IEnumerable<Product>> GetAll();
-        Task<Product> Put(Product product);
-        Task<Product> Create(Product product);//(Product product);
-        Task Delete(Product product);
+        Task Put(Product product);
+        Task Create(Product product);
+        Task Delete(string id);
     }
 
     public class ProductsRepository : IProductsRepository
     {
+        internal MongoDBContext db = new MongoDBContext();
         public async Task<IEnumerable<Product>> GetAll()
         {
-            return new List<Product>
+            try
             {
-                new Product()
-                {
-                    Name = "Ryžiai",
-                    CreationTimeUtc = DateTime.UtcNow
-                },
-                new Product()
-                {
-                    Name = "Obuolys",
-                    CreationTimeUtc = DateTime.UtcNow
-                }
-            };
+                return await db.Product.Find(_ => true).ToListAsync();
+            }
+            catch
+            {
+                return null;
+            }
         }
-        public async Task<Product> Get(int id)
+        public async Task<Product> Get(string id)
         {
-            return new Product()
+            try
             {
-                Name = "Ryžiai",
-                CreationTimeUtc = DateTime.UtcNow
-            };
+                FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(s =>  s.Id, new string(id));
+                return await db.Product.Find(filter).FirstOrDefaultAsync();
+            }
+            catch
+            {
+
+                return null;
+            }
 
         }
-        public async Task<Product> Create(Product product)
+        public async Task Create(Product product)
         {
-            return new Product()
+            try
             {
-                Name = "Kruopos",
-                CreationTimeUtc = DateTime.UtcNow
-            };
-        }
-        public async Task<Product> Put(Product product)
-        {
-            return new Product()
+                await db.Product.InsertOneAsync(product);
+
+            }
+            catch
             {
-                Name = "Duona",
-                CreationTimeUtc = DateTime.UtcNow
-            };
+
+                throw;
+            }
         }
-        public async Task Delete(Product product)
+        public async Task Put(Product product)
         {
+            try
+            {
+                var filter = Builders<Product>
+                    .Filter
+                    .Eq(s => s.Id, product.Id);
+                await db.Product.ReplaceOneAsync(filter, product);
+            }
+            catch
+            {
+
+                throw;
+            }
+        }
+        public async Task Delete(string id)
+        {
+
+            try
+            {
+                var filter = Builders<Product>.Filter.Eq(s => s.Id, new string(id));
+                await db.Product.DeleteOneAsync(filter);
+            }
+            catch
+            {
+
+                throw;
+            }
         }
     }
 }

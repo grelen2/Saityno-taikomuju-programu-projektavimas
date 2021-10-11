@@ -3,69 +3,91 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace RestGreta.Data.Repositories
 {
     
     public interface ICommentRepository
     {
-        Task<Comment> Create(Comment comment);
-        Task Delete(Comment comment);
-        Task<Comment> Get(int id);
+        Task Create(Comment comment);
+        Task Delete(string id);
+        Task<Comment> Get(string id);
         Task<IEnumerable<Comment>> GetAll();
-        Task<Comment> Put(Comment comment);
+        Task Put(Comment comment);
     }
 
     public class CommentRepository : ICommentRepository
     {
-        public async Task<IEnumerable<Comment>> GetAll()
+        internal MongoDBContext db = new MongoDBContext();
+       
+       public async Task<IEnumerable<Comment>> GetAll()
         {
-            return new List<Comment>
+            try
             {
-                new Comment()
-                {
-                    UserName = "Pitonas",
-                    CommentText = "Naujas blynu receptas buvo labai geras",
-                    CreationTimeUtc = DateTime.UtcNow
-                },
-                new Comment()
-                {
-                    UserName = "Nusivylusi mamyte",
-                    CommentText = "Deja, bet balandeliu isvirti nepavyko taip, kaip buvo pateikta aprasyme",
-                    CreationTimeUtc = DateTime.UtcNow
-                }
-            };
+                return await db.Comment.Find(_ => true).ToListAsync();
+            }
+            catch
+            {
+                return null;
+            }
         }
-        public async Task<Comment> Get(int id)
+        public async Task<Comment> Get(string id)
         {
-            return new Comment()
+            try
             {
-                UserName = "Nusivylusi mamyte",
-                CommentText = "Deja, bet balandeliu isvirti nepavyko taip, kaip buvo pateikta aprasyme",
-                CreationTimeUtc = DateTime.UtcNow
-            };
+                FilterDefinition<Comment> filter = Builders<Comment>.Filter.Eq(s => s.Id, new string(id));
+                return await db.Comment.Find(filter).FirstOrDefaultAsync();
+            }
+            catch
+            {
+
+                return null;
+            }
 
         }
-        public async Task<Comment> Create(Comment comment)
+        public async Task Create(Comment comment)
         {
-            return new Comment()
+            try
             {
-                UserName = "Nusivylusi mamyte",
-                CommentText = "Deja, bet balandeliu isvirti nepavyko taip, kaip buvo pateikta aprasyme",
-                CreationTimeUtc = DateTime.UtcNow
-            };
-        }
-        public async Task<Comment> Put(Comment comment)
-        {
-            return new Comment()
+                await db.Comment.InsertOneAsync(comment);
+                
+            }
+            catch
             {
-                UserName = "Nusivylusi mamyte",
-                CommentText = "Deja, bet balandeliu isvirti nepavyko taip, kaip buvo pateikta aprasyme",
-                CreationTimeUtc = DateTime.UtcNow
-            };
+
+                throw;
+            }
         }
-        public async Task Delete(Comment comment)
+        public async Task Put(Comment comment)
         {
+            try
+            {
+                var filter = Builders<Comment>
+                    .Filter
+                    .Eq(s => s.Id, comment.Id);
+                await db.Comment.ReplaceOneAsync(filter, comment);
+            }
+            catch
+            {
+
+                throw;
+            }
+        }
+        public async Task Delete(string id)
+        {
+
+            try
+            {
+                var filter = Builders<Comment>.Filter.Eq(s => s.Id, new string(id));
+                await db.Comment.DeleteOneAsync(filter);
+            }
+            catch
+            {
+
+                throw;
+            }
         }
     }
 }

@@ -1,68 +1,100 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using RestGreta.Data.Dtos.Comments;
 using RestGreta.Data.Entities;
 using RestGreta.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 
 namespace RestGreta.Controllers
 {
-    [ApiController]
+    
     [Route("api/comments")]
+    [ApiController]
     public class CommentController: ControllerBase
     {
-        private readonly ICommentRepository _commentRepository;
-        private readonly IMapper _mapper;
-        public CommentController(ICommentRepository commentRepository, IMapper mapper)
-        {
-            _commentRepository = commentRepository;
-            _mapper = mapper;
-        }
-
+       
+        ICommentRepository db = new CommentRepository();
+       
+        
         [HttpGet]
-        public async Task<IEnumerable<CommentDto>> GetAll()
+        public async Task<ActionResult<IEnumerable<Comment>>> GetAll()
         {
-            return (await _commentRepository.GetAll()).Select(o => _mapper.Map<CommentDto>(o));
+            var comms = await db.GetAll();
+            if(comms == null)
+            {
+                return NotFound();
+            }
+            return Ok(comms);
         }
+
+        
         [HttpGet(template: "{id}")]
-        public async Task<ActionResult<CommentDto>> Get(int id)
+        public async Task<ActionResult<Comment>> Get(string id)
         {
-            var comment = await _commentRepository.Get(id);
-            if (comment == null) return NotFound($"Comment with id'{id}'not found");
-            return _mapper.Map<CommentDto>(comment);
-
+            var comms = await db.Get(id);
+            if (comms == null)
+            {
+                return NotFound("Comment with this id not found");
+            }
+            return Ok(comms);
 
         }
-       [HttpPost]
-        public async Task<ActionResult<CommentDto>> Post(CreateCommentDto commentDto)
+
+        
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] Comment comment)
         {
-            var comment = _mapper.Map<Comment>(commentDto);
-            await _commentRepository.Create(comment);
-            return Created($"/api/comments/{comment.Id}", _mapper.Map<CommentDto>(comment));
+
+            if (comment.CommentText == null || comment.UserName == null)
+            {
+                //ModelState.AddModelError("CommentText", "The comment text shouldn't be empty");
+                return BadRequest("The comment text or/and user name shouldn't be empty");
+            }
+            else
+            {
+                await db.Create(comment);
+                return Created("Created", "Created");
+            }
         }
+
+        
         [HttpPut(template: "{id}")]
-        public async Task<ActionResult<CommentDto>> Put(int id, UpdateCommentDto commentDto)
+        public async Task<IActionResult> Put([FromBody] Comment comment, string id)
         {
-            var comment = await _commentRepository.Get(id);
-            if (comment == null) return NotFound($"Comment with id'{id}'not found");
-
-            comment.UserName = commentDto.UserName;
-            comment.CommentText = commentDto.CommentText;
-
-            await _commentRepository.Put(comment);
-            return _mapper.Map<CommentDto>(comment);
+            var com = await db.Get(id);
+            if (com == null)
+            {
+                return NotFound();
+            }
+            if (comment.CommentText == null || comment.UserName == null)
+            {
+                return BadRequest("The comment text or/and user name shouldn't be empty");
+            }
+            else
+            {
+                comment.Id = new string(id);
+                await db.Put(comment);
+                return Ok();
+            }
         }
-        [HttpDelete(template: "{id}")]
-        public async Task<ActionResult<CommentDto>> Delete(int id)
-        {
-            var comment = await _commentRepository.Get(id);
-            if (comment == null) return NotFound($"Comment with id'{id}'not found");
+        
 
-            await _commentRepository.Delete(comment);
-            return NoContent();
+        [HttpDelete(template:"{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var comment = await db.Get(id);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                await db.Delete(id);
+                return Ok();
+            }
         }
     }
 }

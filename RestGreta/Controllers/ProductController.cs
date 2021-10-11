@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using RestGreta.Data.Dtos.Products;
 using RestGreta.Data.Entities;
 using RestGreta.Data.Repositories;
 using System;
@@ -10,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace RestGreta.Controllers
 {
-    [ApiController]
     [Route("api/products")]
+    [ApiController]
+    
 
     /*product
     /api/product GET ALL 200
@@ -21,54 +21,80 @@ namespace RestGreta.Controllers
     /api/product/{id} DELETE 204*/
     public class ProductsController : ControllerBase
     {
-        private readonly IProductsRepository _productsRepository;
-        private readonly IMapper _mapper;
-        public ProductsController(IProductsRepository productsRepository, IMapper mapper)
-        {
-            _productsRepository = productsRepository;
-            _mapper = mapper;
-        }
+        IProductsRepository db = new ProductsRepository();
 
+        
         [HttpGet]
-        public async Task<IEnumerable<ProductDto>> GetAll()
+        public async Task<ActionResult<IEnumerable<Product>>> GetAll()
         {
-            return (await _productsRepository.GetAll()).Select(o => _mapper.Map<ProductDto>(o));
+            var products = await db.GetAll();
+            if (products == null)
+            {
+                return NotFound();
+            }
+            return Ok(products);
         }
-        [HttpGet(template:"{id}")]
-        public async Task<ActionResult<ProductDto>> Get(int id)
-        {
-            var product = await _productsRepository.Get(id);
-            if (product == null) return NotFound($"Product with id'{id}'not found");
-            return _mapper.Map<ProductDto>(product);
 
+        [HttpGet(template:"{id}")]
+        public async Task<ActionResult<Product>> Get(string id)
+        {
+            var products = await db.Get(id);
+            if (products == null)
+            {
+                return NotFound();
+            }
+            return Ok(products);
 
         }
         [HttpPost]
-        public async Task<ActionResult<ProductDto>> Post(CreateProductDto productDto)
+        public async Task<ActionResult> Post([FromBody] Product product)
         {
-            var product = _mapper.Map<Product>(productDto);
-            await _productsRepository.Create(product);
-            return Created($"/api/products/{product.Id}",_mapper.Map<ProductDto>(product));
+
+            if (product.Name == null)
+            {
+                ModelState.AddModelError("name", "The product name shouldn't be empty");
+                return BadRequest("The product name shouldn't be empty");
+            }
+            else {
+                await db.Create(product);
+                return Created("Created", "Created");
+            }
         }
+
         [HttpPut(template: "{id}")]
-        public async Task<ActionResult<ProductDto>> Put(int id, UpdateProductDto productDto)
+        public async Task<IActionResult> Put([FromBody] Product product, string id)
         {
-            var product = await _productsRepository.Get(id);
-            if (product == null) return NotFound($"Product with id'{id}'not found");
-
-            product.Name = productDto.Name;
-
-            await _productsRepository.Put(product);
-            return _mapper.Map<ProductDto>(product);
+            var prod = await db.Get(id);
+            if (prod == null)
+            {
+              //  if (product == null)
+            //{
+                return NotFound("Product with this id not found");
+            }
+            else if( product.Name == null)
+            {
+                ModelState.AddModelError("name", "The product name shouldn't be empty");
+                return BadRequest("The product name shouldn't be empty");
+            }
+            else{
+                product.Id = new string(id);
+                await db.Put(product);
+                return Ok();
+            }
         }
         [HttpDelete(template: "{id}")]
-        public async Task<ActionResult<ProductDto>> Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
-            var product = await _productsRepository.Get(id);
-            if (product == null) return NotFound($"Product with id'{id}'not found");
-
-            await _productsRepository.Delete(product);
-            return NoContent();
+            var product = await db.Get(id);
+            if (product == null)
+            {
+                return NotFound("Product with this id not found");
+            }
+            else
+            {
+                await db.Delete(id);
+                return Ok();
+            }
         }
 
     }
