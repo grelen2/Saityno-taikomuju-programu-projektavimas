@@ -20,9 +20,9 @@ namespace RestGreta.Controllers
        
         
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Comment>>> GetAll()
+        public async Task<ActionResult<IEnumerable<Comment>>> GetAllComments()
         {
-            var comms = await db.GetAll();
+            var comms = await db.GetAllComments();
             if(comms == null)
             {
                 return NotFound();
@@ -32,9 +32,9 @@ namespace RestGreta.Controllers
 
         
         [HttpGet(template: "{id}")]
-        public async Task<ActionResult<Comment>> Get(string id)
+        public async Task<ActionResult<Comment>> GetComment(string id)
         {
-            var comms = await db.Get(id);
+            var comms = await db.GetComment(id);
             if (comms == null)
             {
                 return NotFound("Comment with this id not found");
@@ -45,7 +45,7 @@ namespace RestGreta.Controllers
 
         
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Comment comment)
+        public async Task<IActionResult> PostComment([FromBody] Comment comment)
         {
 
             if (comment.CommentText == null || comment.UserName == null)
@@ -55,16 +55,16 @@ namespace RestGreta.Controllers
             }
             else
             {
-                await db.Create(comment);
+                await db.CreateComment(comment);
                 return Created("Created", "Created");
             }
         }
 
         
         [HttpPut(template: "{id}")]
-        public async Task<IActionResult> Put([FromBody] Comment comment, string id)
+        public async Task<IActionResult> PutComment([FromBody] Comment comment, string id)
         {
-            var com = await db.Get(id);
+            var com = await db.GetComment(id);
             if (com == null)
             {
                 return NotFound();
@@ -76,24 +76,24 @@ namespace RestGreta.Controllers
             else
             {
                 comment.Id = new string(id);
-                await db.Put(comment);
+                await db.PutComment(comment);
                 return Ok();
             }
         }
         
 
         [HttpDelete(template:"{id}")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> DeleteComment(string id)
         {
-            var comment = await db.Get(id);
+            var comment = await db.GetComment(id);
             if (comment == null)
             {
                 return NotFound();
             }
             else
             {
-                await db.Delete(id);
-                return Ok();
+                await db.DeleteComment(id);
+                return NoContent();
             }
         }
     }

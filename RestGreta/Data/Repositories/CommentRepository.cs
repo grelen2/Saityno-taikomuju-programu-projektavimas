@@ -11,18 +11,18 @@ namespace RestGreta.Data.Repositories
     
     public interface ICommentRepository
     {
-        Task Create(Comment comment);
-        Task Delete(string id);
-        Task<Comment> Get(string id);
-        Task<IEnumerable<Comment>> GetAll();
-        Task Put(Comment comment);
+        Task CreateComment(Comment comment);
+        Task DeleteComment(string id);
+        Task<Comment> GetComment(string id);
+        Task<IEnumerable<Comment>> GetAllComments();
+        Task PutComment(Comment comment);
     }
 
     public class CommentRepository : ICommentRepository
     {
         internal MongoDBContext db = new MongoDBContext();
        
-       public async Task<IEnumerable<Comment>> GetAll()
+       public async Task<IEnumerable<Comment>> GetAllComments()
         {
             try
             {
@@ -33,7 +33,7 @@ namespace RestGreta.Data.Repositories
                 return null;
             }
         }
-        public async Task<Comment> Get(string id)
+        public async Task<Comment> GetComment(string id)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace RestGreta.Data.Repositories
             }
 
         }
-        public async Task Create(Comment comment)
+        public async Task CreateComment(Comment comment)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace RestGreta.Data.Repositories
                 throw;
             }
         }
-        public async Task Put(Comment comment)
+        public async Task PutComment(Comment comment)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace RestGreta.Data.Repositories
                 throw;
             }
         }
-        public async Task Delete(string id)
+        public async Task DeleteComment(string id)
         {
 
             try

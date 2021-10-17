@@ -28,3 +28,15 @@ C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\RestGreta.
 C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\ref\RestGreta.dll
 C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\RestGreta.pdb
 C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\obj\Release\net5.0\RestGreta.genruntimeconfig.cache
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Release\net5.0\DnsClient.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Release\net5.0\MongoDB.Bson.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Release\net5.0\MongoDB.Driver.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Release\net5.0\MongoDB.Driver.Core.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Release\net5.0\MongoDB.Libmongocrypt.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Release\net5.0\SharpCompress.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Release\net5.0\runtimes\win\native\libzstd.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Release\net5.0\runtimes\win\native\snappy32.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Release\net5.0\runtimes\win\native\snappy64.dll
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Release\net5.0\runtimes\linux\native\libmongocrypt.so
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Release\net5.0\runtimes\osx\native\libmongocrypt.dylib
+C:\Users\Greta\Desktop\Backend\RestGreta\RestGreta\bin\Release\net5.0\runtimes\win\native\mongocrypt.dll

@@ -10,13 +10,13 @@ using MongoDB.Bson;
 
 namespace RestGreta.Controllers
 {
-    
+
     [Route("api/recipies")]
     [ApiController]
-    public class RecipeController :ControllerBase
+    public class RecipeController : ControllerBase
     {
         IRecipesRepository db = new RecipesRepository();
-        
+
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Recipe>>> GetAll()
@@ -82,8 +82,91 @@ namespace RestGreta.Controllers
             else
             {
                 await db.Delete(id);
-                return Ok();
+                return NoContent();
             }
         }
+        //-------------------------------------------------------------------------
+        [HttpGet("{id}/comment")]
+        public async Task<ActionResult<IEnumerable<Recipe>>> GetAllComments(string id)
+        {
+            var recipe = await db.Get(id);
+            if (recipe == null)
+            {
+                return NotFound("Recipe with this id not found");
+            }
+            var x = await db.GetAllComments(id);
+            if (x == null)
+            {
+                return NotFound("This recipie do not have comments");
+            }
+            return Ok(x);
+        }
+        [HttpGet("{id}/comment/{commentId}")]
+        public async Task<ActionResult<Comment>> GetComment(string id, string commentId)
+        {
+            var recipe = await db.Get(id);
+            if (recipe == null)
+            {
+                return NotFound("Recipe with this id not found");
+            }
+            var comment = await db.GetComment(id, commentId);
+            if (comment == null)
+            {
+                return NotFound("Comment with this id not found");
+            }
+            return Ok(comment);
+        }
+        [HttpPost("{id}/comment")]
+        public async Task<IActionResult> CreateComment([FromBody] Comment comment, string id)
+        {
+            var recipe = await db.Get(id);
+            if (recipe == null)
+            {
+                return NotFound("Recipe with this id not found");
+            }
+            if (comment.CommentText == null || comment.UserName == null)
+            {
+                return BadRequest("The comment text or/and user name shouldn't be empty");
+            }
+            await db.CreateComment(comment, id);
+            return Created("Created", true);
+        }
+        [HttpPut("{id}/comment/{commentId}")]
+        public async Task<IActionResult> PutComment([FromBody] Comment comment, string id, string commentId)
+        {
+            var recipe = await db.Get(id);
+            if (recipe == null)
+            {
+                return NotFound("Recipe with this id not found");
+            }
+            if (comment == null)
+            {
+                return NotFound("Comment with this id not found");
+            }
+            if (comment.CommentText == null || comment.UserName == null)
+            {
+                return BadRequest("The comment text or/and user name shouldn't be empty");
+            }
+            comment.Id = new string(commentId);
+            await db.PutComment(comment, id, commentId);
+            return Ok("Comment updated");
+        }
+        [HttpDelete("{id}/comment/{commentId}")]
+        public async Task<IActionResult> DeleteComment(string id, string commentId)
+        {
+            var recipe = await db.Get(id);
+            var comm = await db.GetComment(id, commentId);
+            if (recipe == null)
+            {
+                return NotFound("Recipe with this id not found");
+            }
+            if (comm == null)
+            {
+                return NotFound("Comment with this id not found");
+            }
+            await db.DeleteComment(id, commentId);
+            return NoContent();
+        }
+
     }
 }

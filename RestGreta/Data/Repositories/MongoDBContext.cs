@@ -14,9 +14,11 @@ namespace RestGreta.Data.Repositories
         public MongoClient client;
         public MongoDBContext()
         {
-            /*client = new MongoClient("mongodb + srv://admin:admin@cluster0.lmt7h.mongodb.net/saitynai?retryWrites=true&w=majority");
-            mongodb = client.GetDatabase("saitynai");*/
-            var settings = MongoClientSettings.FromConnectionString("mongodb+srv://admin:admin@cluster0.lmt7h.mongodb.net/saitynai?retryWrites=true&w=majority");
+        /*client = new MongoClient("mongodb + srv://admin:admin@cluster0.lmt7h.mongodb.net/saitynai?retryWrites=true&w=majority");
+        mongodb = client.GetDatabase("saitynai");*/
+       
+                //var settings = MongoClientSettings.FromConnectionString("mongodb+srv://admin:admin@cluster0.lmt7h.mongodb.net/saitynai?retryWrites=true&w=majority");
+            var settings = MongoClientSettings.FromConnectionString("mongodb://recipiesportaldatabase:JFj2qX3mgWRY4H3SmsqcNH79aMiVK44dVzXk4RLVvEsxglaOpuJem2chTnRryU2sVbl61IfU1ealXIuNk4St1w==@recipiesportaldatabase.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@recipiesportaldatabase@");
             client = new MongoClient(settings);
             mongodb = client.GetDatabase("saitynai");
         }
@@ -46,6 +48,13 @@ namespace RestGreta.Data.Repositories
             get
             {
                 return mongodb.GetCollection<UserList>("users");
+            }
+        }
+        public IMongoCollection<RecipeComment> RecipeComment
+        {
+            get
+            {
+                return mongodb.GetCollection<RecipeComment>("RecipeComment");
             }
         }
     }

@@ -82,7 +82,7 @@ namespace RestGreta.Controllers
             else
             {
                 await db.Delete(id);
-                return Ok();
+                return NoContent();
             }
         }
     }
