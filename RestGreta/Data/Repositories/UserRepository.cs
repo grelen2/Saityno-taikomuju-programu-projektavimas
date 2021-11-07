@@ -21,7 +21,7 @@ namespace RestGreta.Data.Repositories
         Task DeleteRecipeComment(string userId, string recipeId, string commentId);
         Task DeleteUser(string id);
         Task<IEnumerable<User>> GetAllUsers();
-        Task<IEnumerable<Product>> GetProduct(string userId);
+        Task<IEnumerable<Product>> GetProducts(string userId);
         Task<Product> GetProduct(string userId, string productId);
         Task<Recipe> GetRecipe(string userId, string recipeId);
         Task<Comment> GetRecipeComment(string userId, string recipeId, string commentId);
@@ -129,6 +129,14 @@ namespace RestGreta.Data.Repositories
         {
             try
             {
+                return await db.Recipe.Find(_ => true).ToListAsync();
+            }
+            catch
+            {
+                return null;
+            }
+            /*try
+            {
                 var fil = Builders<UserRecipe>.Filter.Eq(x => x.UserId, userId);
 
                 var rez = db.UserRecipe.Find(fil).ToList();
@@ -151,7 +159,7 @@ namespace RestGreta.Data.Repositories
             {
 
                 return null;
-            }
+            }*/
         }
         public async Task CreateRecipe(Recipe recipe, string userId)
         {
@@ -173,7 +181,18 @@ namespace RestGreta.Data.Repositories
 
         public async Task<Recipe> GetRecipe(string userId, string recipeId)
         {
+
             try
+            {
+                FilterDefinition<Recipe> filter = Builders<Recipe>.Filter.Eq(s => s.Id, new string(recipeId));
+                return await db.Recipe.Find(filter).FirstOrDefaultAsync();
+            }
+            catch
+            {
+
+                return null;
+            }
+            /*try
             {
                 var builder = Builders<Recipe>.Filter;
                 var builder0 = Builders<UserRecipe>.Filter;
@@ -194,7 +213,7 @@ namespace RestGreta.Data.Repositories
             {
 
                 return null;
-            }
+            }*/
         }
 
         public async Task DeleteRecipe(string userId, string recipeId)
@@ -253,6 +272,14 @@ namespace RestGreta.Data.Repositories
         {
             try
             {
+                return await db.Comment.Find(_ => true).ToListAsync();
+            }
+            catch
+            {
+                return null;
+            }
+            /*try
+            {
                 var builder = Builders<Recipe>.Filter;
                 var builder0 = Builders<UserRecipe>.Filter;
                 var builderpc = Builders<RecipeComment>.Filter;
@@ -310,7 +337,7 @@ namespace RestGreta.Data.Repositories
             {
 
                 return null;
-            }
+            }*/
         }
         public async Task CreateRecipeComment(Comment comment, string userId, string recipeId)
         {
@@ -338,6 +365,16 @@ namespace RestGreta.Data.Repositories
         public async Task<Comment> GetRecipeComment(string userId, string recipeId, string commentId)
         {
             try
+            {
+                FilterDefinition<Comment> filter = Builders<Comment>.Filter.Eq(s => s.Id, new string(commentId));
+                return await db.Comment.Find(filter).FirstOrDefaultAsync();
+            }
+            catch
+            {
+
+                return null;
+            }
+            /*try
             {
                 var builder = Builders<Recipe>.Filter;
                 var builderCom = Builders<Comment>.Filter;
@@ -387,7 +424,7 @@ namespace RestGreta.Data.Repositories
             {
 
                 return null;
-            }
+            }*/
         }
         public async Task DeleteRecipeComment(string userId, string recipeId, string commentId)
         {
@@ -494,9 +531,17 @@ namespace RestGreta.Data.Repositories
         }
 
         //--------------------------product---------------------------------------
-        public async Task<IEnumerable<Product>> GetProduct(string userId)
+        public async Task<IEnumerable<Product>> GetProducts(string userId)
         {
             try
+            {
+                return await db.Product.Find(_ => true).ToListAsync();
+            }
+            catch
+            {
+                return null;
+            }
+            /*try
             {
                 var fil = Builders<UserProduct>.Filter.Eq(x => x.UserId, userId);
 
@@ -520,7 +565,7 @@ namespace RestGreta.Data.Repositories
             {
 
                 return null;
-            }
+            }*/
         }
         public async Task CreateProduct(Product product, string userId)
         {
@@ -544,6 +589,16 @@ namespace RestGreta.Data.Repositories
         {
             try
             {
+                FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(s => s.Id, new string(productId));
+                return await db.Product.Find(filter).FirstOrDefaultAsync();
+            }
+            catch
+            {
+
+                return null;
+            }
+            /*try
+            {
                 var builder = Builders<Product>.Filter;
                 var builder0 = Builders<UserProduct>.Filter;
                 var filteredProducts = builder0.Eq(x => x.UserId, userId);
@@ -563,7 +618,7 @@ namespace RestGreta.Data.Repositories
             {
 
                 return null;
-            }
+            }*/
         }
 
         public async Task DeleteProduct(string userId, string productId)

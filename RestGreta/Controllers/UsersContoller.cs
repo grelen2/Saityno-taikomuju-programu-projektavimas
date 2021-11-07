@@ -349,12 +349,12 @@ namespace RestGreta.Controllers
             var product = await db.GetUser(id);
             if (product == null)
             {
-                return NotFound();
+                return NotFound("nerastas naudotojas");
             }
-            var allproducts = await db.GetProduct(id);
+            var allproducts = await db.GetProducts(id);
             if (allproducts == null)
             {
-                return NotFound();
+                return NotFound("Nerastas produktas");
             }
             return Ok(allproducts);
         }
