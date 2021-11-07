@@ -6,5 +6,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RestGreta.Data.Entities
 {
-    public record CreateUserList([Required] string UserName, [Required] string Name, [Required] string Surname, string Address);
+    public class UserInfo
+    {
+        [Required]
+        public string Email { get; set; }
+        [Required]
+        public string Password { get; set; }
+    }
 }

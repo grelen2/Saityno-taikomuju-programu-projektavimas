@@ -11,17 +11,17 @@ namespace RestGreta.Data.Repositories
     public interface IProductsRepository
     {
         
-        Task<Product> Get(string id);
-        Task<IEnumerable<Product>> GetAll();
-        Task Put(Product product);
-        Task Create(Product product);
-        Task Delete(string id);
+        Task<Product> GetProduct(string id);
+        Task<IEnumerable<Product>> GetAllProducts();
+        Task PutProduct(Product product);
+        Task CreateProduct(Product product);
+        Task DeleteProduct(string id);
     }
 
     public class ProductsRepository : IProductsRepository
     {
         internal MongoDBContext db = new MongoDBContext();
-        public async Task<IEnumerable<Product>> GetAll()
+        public async Task<IEnumerable<Product>> GetAllProducts()
         {
             try
             {
@@ -32,7 +32,7 @@ namespace RestGreta.Data.Repositories
                 return null;
             }
         }
-        public async Task<Product> Get(string id)
+        public async Task<Product> GetProduct(string id)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace RestGreta.Data.Repositories
             }
 
         }
-        public async Task Create(Product product)
+        public async Task CreateProduct(Product product)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace RestGreta.Data.Repositories
                 throw;
             }
         }
-        public async Task Put(Product product)
+        public async Task PutProduct(Product product)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace RestGreta.Data.Repositories
                 throw;
             }
         }
-        public async Task Delete(string id)
+        public async Task DeleteProduct(string id)
         {
 
             try

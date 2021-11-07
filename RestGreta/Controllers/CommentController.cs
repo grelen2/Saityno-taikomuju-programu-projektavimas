@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RestGreta.Controllers
 {
@@ -17,8 +18,8 @@ namespace RestGreta.Controllers
     {
        
         ICommentRepository db = new CommentRepository();
-       
-        
+
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Comment>>> GetAllComments()
         {
@@ -30,7 +31,7 @@ namespace RestGreta.Controllers
             return Ok(comms);
         }
 
-        
+        [AllowAnonymous]
         [HttpGet(template: "{id}")]
         public async Task<ActionResult<Comment>> GetComment(string id)
         {
@@ -43,7 +44,7 @@ namespace RestGreta.Controllers
 
         }
 
-        
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> PostComment([FromBody] Comment comment)
         {
@@ -60,7 +61,7 @@ namespace RestGreta.Controllers
             }
         }
 
-        
+        [Authorize]
         [HttpPut(template: "{id}")]
         public async Task<IActionResult> PutComment([FromBody] Comment comment, string id)
         {
@@ -80,8 +81,8 @@ namespace RestGreta.Controllers
                 return Ok();
             }
         }
-        
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete(template:"{id}")]
         public async Task<IActionResult> DeleteComment(string id)
         {

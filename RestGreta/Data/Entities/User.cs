@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace RestGreta.Data.Entities
 {
-    public class UserList
+    public class User
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -22,6 +23,11 @@ namespace RestGreta.Data.Entities
         public string Surname { get; set; }
         [BsonElement("Address")]
         public string Address { get; set; }
+        [BsonElement("Email")]
+        public string Email { get; set; }
+        [BsonElement("BirthDate")]
+        public DateTime BirthDate { get; set; }
+        public string Role { get; set; }
 
     }
 }

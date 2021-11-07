@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RestGreta.Controllers
 {
@@ -23,11 +24,11 @@ namespace RestGreta.Controllers
     {
         IProductsRepository db = new ProductsRepository();
 
-        
+        [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetAll()
+        public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
         {
-            var products = await db.GetAll();
+            var products = await db.GetAllProducts();
             if (products == null)
             {
                 return NotFound();
@@ -35,10 +36,11 @@ namespace RestGreta.Controllers
             return Ok(products);
         }
 
+        [AllowAnonymous]
         [HttpGet(template:"{id}")]
-        public async Task<ActionResult<Product>> Get(string id)
+        public async Task<ActionResult<Product>> GetProduct(string id)
         {
-            var products = await db.Get(id);
+            var products = await db.GetProduct(id);
             if (products == null)
             {
                 return NotFound();
@@ -46,8 +48,9 @@ namespace RestGreta.Controllers
             return Ok(products);
 
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] Product product)
+        public async Task<ActionResult> PostProduct([FromBody] Product product)
         {
 
             if (product.Name == null)
@@ -56,15 +59,15 @@ namespace RestGreta.Controllers
                 return BadRequest("The product name shouldn't be empty");
             }
             else {
-                await db.Create(product);
+                await db.CreateProduct(product);
                 return Created("Created", "Created");
             }
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPut(template: "{id}")]
-        public async Task<IActionResult> Put([FromBody] Product product, string id)
+        public async Task<IActionResult> PutProduct([FromBody] Product product, string id)
         {
-            var prod = await db.Get(id);
+            var prod = await db.GetProduct(id);
             if (prod == null)
             {
               //  if (product == null)
@@ -78,21 +81,22 @@ namespace RestGreta.Controllers
             }
             else{
                 product.Id = new string(id);
-                await db.Put(product);
+                await db.PutProduct(product);
                 return Ok();
             }
         }
+        [Authorize(Roles ="Admin")]
         [HttpDelete(template: "{id}")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> DeleteProduct(string id)
         {
-            var product = await db.Get(id);
+            var product = await db.GetProduct(id);
             if (product == null)
             {
                 return NotFound("Product with this id not found");
             }
             else
             {
-                await db.Delete(id);
+                await db.DeleteProduct(id);
                 return NoContent();
             }
         }

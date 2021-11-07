@@ -8,14 +8,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RestGreta.Data.Entities
 {
-    public class Product
+    public class UserRecipe
     {
-
+        
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
-        [Required]
-        [BsonElement("Name")]
-        public string Name { get; set;  }
+
+        [BsonElement("UserId")]
+        public string UserId { get; set; }
+
+        [BsonElement("RecipeId")]
+        public string RecipeId { get; set; }
     }
 }

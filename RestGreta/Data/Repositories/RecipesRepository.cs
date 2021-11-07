@@ -11,11 +11,11 @@ namespace RestGreta.Data.Repositories
 {
     public interface IRecipesRepository
     {
-        Task Create(Recipe recipe);
-        Task Delete(string id);
-        Task<Recipe> Get(string id);
-        Task<IEnumerable<Recipe>> GetAll();
-        Task Put(Recipe recipe);
+        Task CreateRecipe(Recipe recipe);
+        Task DeleteRecipe(string id);
+        Task<Recipe> GetRecipe(string id);
+        Task<IEnumerable<Recipe>> GetAllRecipes();
+        Task PutRecipe(Recipe recipe);
         //hierarchija
         Task<IEnumerable<Comment>> GetAllComments(string id);
         Task<Comment> GetComment(string recipeId, string id);
@@ -29,7 +29,7 @@ namespace RestGreta.Data.Repositories
     {
         internal MongoDBContext db = new MongoDBContext();
 
-        public async Task<IEnumerable<Recipe>> GetAll()
+        public async Task<IEnumerable<Recipe>> GetAllRecipes()
         {
             try
             {
@@ -41,7 +41,7 @@ namespace RestGreta.Data.Repositories
             }
         
         }
-        public async Task<Recipe> Get(string id)
+        public async Task<Recipe> GetRecipe(string id)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace RestGreta.Data.Repositories
             }
 
         }
-        public async Task Create(Recipe recipe)
+        public async Task CreateRecipe(Recipe recipe)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace RestGreta.Data.Repositories
                 throw;
             }
         }
-        public async Task Put(Recipe recipe)
+        public async Task PutRecipe(Recipe recipe)
         {
 
             try
@@ -84,7 +84,7 @@ namespace RestGreta.Data.Repositories
                 throw;
             }
         }
-        public async Task Delete(String id)
+        public async Task DeleteRecipe(String id)
         {
             try
             {
