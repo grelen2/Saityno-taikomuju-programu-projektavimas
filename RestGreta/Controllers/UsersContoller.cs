@@ -155,8 +155,8 @@ namespace RestGreta.Controllers
         }
         //------------------------------------------------
 
-       [Authorize]
-       [HttpDelete("{id}/recipe/{recipeId}/comment/{commentId}")]
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}/recipe/{recipeId}/comment/{commentId}")]
         public async Task<IActionResult> DeleteComment(string id, string recipeId, string commentId)
         {
             var recipe = await db.GetUser(id);
@@ -198,7 +198,7 @@ namespace RestGreta.Controllers
             return NoContent();
         }
         // PUT api/<Users>/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}/recipe/{recipeId}/comment/{commentId}")]
         public async Task<IActionResult> UpdateComment([FromBody] Comment recipe, string id, string recipeId, string commentId)
         {
