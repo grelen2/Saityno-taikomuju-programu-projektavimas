@@ -82,6 +82,7 @@ namespace RestGreta.Data.Repositories
             }
 
         }
+
         public async Task CreatUser(User user)
         {
             try
@@ -272,10 +273,26 @@ namespace RestGreta.Data.Repositories
         {
             try
             {
-                return await db.Comment.Find(_ => true).ToListAsync();
+                var fil = Builders<RecipeComment>.Filter.Eq(x => x.RecipeId, recipeId);
+
+                var rez = db.RecipeComment.Find(fil).ToList();
+                string[] ids = new string[rez.Count];
+                var builder = Builders<Comment>.Filter;
+                FilterDefinition<Comment>[] filtered = new FilterDefinition<Comment>[rez.Count];
+                for (int i = 0; i < rez.Count; i++)
+                {
+                    ids[i] = rez[i].CommentId;
+                    filtered[i] = builder.Eq(u => u.Id, ids[i]);
+
+                }
+                var newFil = builder.Or(filtered);
+
+                return await db.Comment.Find(newFil).ToListAsync();
+
             }
             catch
             {
+
                 return null;
             }
             /*try
@@ -364,16 +381,31 @@ namespace RestGreta.Data.Repositories
         }
         public async Task<Comment> GetRecipeComment(string userId, string recipeId, string commentId)
         {
+
             try
             {
-                FilterDefinition<Comment> filter = Builders<Comment>.Filter.Eq(s => s.Id, new string(commentId));
-                return await db.Comment.Find(filter).FirstOrDefaultAsync();
+                var builder = Builders<Comment>.Filter;
+                var builder0 = Builders<RecipeComment>.Filter;
+                var filteredRecipes = builder0.Eq(x => x.RecipeId, recipeId);
+                var recipes = db.RecipeComment.Find(filteredRecipes).ToList();
+                FilterDefinition<Comment> filtered = null;
+                foreach (var item in recipes)
+                {
+                    if (item.RecipeId == recipeId)
+                    {
+                        filtered = builder.Eq(x => x.Id, commentId);
+                    }
+                }
+
+                return await db.Comment.Find(filtered).FirstOrDefaultAsync();
+
             }
             catch
             {
 
                 return null;
             }
+
             /*try
             {
                 var builder = Builders<Recipe>.Filter;

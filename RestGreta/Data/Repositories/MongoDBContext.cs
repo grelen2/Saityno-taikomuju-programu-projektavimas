@@ -71,5 +71,12 @@ namespace RestGreta.Data.Repositories
                 return mongodb.GetCollection<UserProduct>("userProduct");
             }
         }
+        public IMongoCollection<UserList> UserList
+        {
+            get
+            {
+                return mongodb.GetCollection<UserList>("userList");
+            }
+        }
     }
 }

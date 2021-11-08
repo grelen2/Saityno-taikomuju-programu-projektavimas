@@ -19,6 +19,7 @@ namespace RestGreta.Controllers
     {
         IUserRepository db = new UserRepository();
 
+
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
@@ -136,6 +137,7 @@ namespace RestGreta.Controllers
                 return Ok();
             }
         }
+
         [Authorize(Roles = "Admin")]
         [HttpDelete(template: "{id}")]
         public async Task<IActionResult> Delete(string id)
